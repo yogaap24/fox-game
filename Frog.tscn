@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://kgpjrarqcs0b"]
+[gd_scene load_steps=23 format=3 uid="uid://kgpjrarqcs0b"]
 
 [ext_resource type="Script" path="res://Frog.gd" id="1_h7878"]
 [ext_resource type="Texture2D" uid="uid://b3hj0sxjx7i58" path="res://Sunny-land-files/Sunny-land-files/Graphical Assets/spritesheets/frog-idle.png" id="1_mjcfh"]
@@ -81,9 +81,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sivsu")
 }],
-"loop": true,
+"loop": false,
 "name": &"Death",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -97,6 +97,24 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4pnvo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwvx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwvx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwvx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwvx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwvx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwvx3")
 }],
 "loop": true,
 "name": &"Idle",
@@ -118,7 +136,13 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i3lhq"]
-radius = 120.0
+radius = 216.148
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wolli"]
+size = Vector2(16, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ucxp4"]
+size = Vector2(22, 9)
 
 [node name="Frog" type="CharacterBody2D"]
 script = ExtResource("1_h7878")
@@ -133,8 +157,26 @@ sprite_frames = SubResource("SpriteFrames_4wujk")
 animation = &"Idle"
 
 [node name="PlayerDetection" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
 shape = SubResource("CircleShape2D_i3lhq")
 
+[node name="PlayerDeath" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDeath"]
+position = Vector2(0, -9)
+scale = Vector2(1, 0.8)
+shape = SubResource("RectangleShape2D_wolli")
+
+[node name="PlayerCollision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollision"]
+position = Vector2(0, -3.5)
+scale = Vector2(1.1, 1)
+shape = SubResource("RectangleShape2D_ucxp4")
+
 [connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
+[connection signal="body_exited" from="PlayerDetection" to="." method="_on_player_detection_body_exited"]
+[connection signal="body_entered" from="PlayerDeath" to="." method="_on_player_death_body_entered"]
+[connection signal="body_entered" from="PlayerCollision" to="." method="_on_player_collision_body_entered"]

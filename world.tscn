@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bx68pi1gm31rj"]
+[gd_scene load_steps=9 format=3 uid="uid://bx68pi1gm31rj"]
 
 [ext_resource type="Texture2D" uid="uid://cjswubfud6bnj" path="res://Sunny-land-files/Sunny-land-files/Graphical Assets/environment/tileset.png" id="1_f7874"]
 [ext_resource type="PackedScene" uid="uid://dfysya7tedq21" path="res://player/Player.tscn" id="1_uye2y"]
@@ -407,6 +407,20 @@ texture = ExtResource("1_f7874")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_gdldj")
 
+[sub_resource type="GDScript" id="GDScript_m7tjb"]
+script/source = "extends Label
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	text = \"HP: \" + str(get_node(\"../../Player/Player\").HEALTH)
+"
+
 [node name="world" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -425,8 +439,25 @@ position = Vector2(576, 172)
 scale = Vector2(3, 1.96667)
 texture = ExtResource("2_srysf")
 
-[node name="Player" parent="." instance=ExtResource("1_uye2y")]
+[node name="Player" type="Node2D" parent="."]
+
+[node name="Player" parent="Player" instance=ExtResource("1_uye2y")]
 position = Vector2(40, 264)
 
-[node name="Frog" parent="." instance=ExtResource("5_6ojp1")]
+[node name="Mobs" type="Node2D" parent="."]
+
+[node name="Frog" parent="Mobs" instance=ExtResource("5_6ojp1")]
 position = Vector2(264, 320)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Hp" type="Label" parent="UI"]
+offset_left = 31.0
+offset_right = 71.0
+offset_bottom = 34.0
+theme_override_colors/font_color = Color(0, 0.701961, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.101961, 0.101961, 0.101961, 1)
+theme_override_colors/font_outline_color = Color(0.894118, 0.894118, 0.894118, 1)
+theme_override_font_sizes/font_size = 24
+text = "HP"
+script = SubResource("GDScript_m7tjb")

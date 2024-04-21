@@ -26,6 +26,7 @@ script/source = "extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 const DEATH_THRESHOLD = 1000
+var HEALTH = 100
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\")
@@ -80,8 +81,7 @@ func _physics_process(delta):
 		anim.play(\"Fall\")
 	elif velocity.y > 700 and velocity.y > 0:
 		anim.play(\"Death\")
-		position = start_position
-		velocity = Vector2.ZERO
+		await anim.animation_finished
 
 	move_and_slide()
 "
